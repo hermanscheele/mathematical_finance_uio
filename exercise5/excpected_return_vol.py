@@ -43,7 +43,6 @@ def est_volatiliy(price_data):
 
 #--------------- need this for the fitted normal distribution -------------------- #
 def all_est_return_vol(data):
-
     est_return_vol_list = []
     for i in range(1, len(data)):
         prices = df[data[i]]
@@ -53,11 +52,28 @@ def all_est_return_vol(data):
     return est_return_vol_list
 
 
-print(all_est_return_vol(cols))
 
 
-#--------------------- I have to plot the returns for each asset --------------- #
+def plot_return_data(price_data, r_k, sigma):
+
+    n = len(price_data)
+    r_is = []
+    for i in range(n - 1):
+        s_i = float(price_data[i].replace(',', "."))
+        s_i_1 = float(price_data[i + 1].replace(',', "."))
+
+        r_i = (s_i_1 - s_i) / s_i
+        r_is.append(r_i)
 
 
-# sns.displot(returns, kind="hist")
-# plt.show()
+    #----------- make and plot the fitted normal distribution --------------------#
+
+    sns.histplot(r_is, color="skyblue")
+    sns.kdeplot(r_is, color="red")
+
+    plt.legend()
+    plt.show()
+    
+
+energy_pricedata = df[cols[1]]
+plot_return_data(energy_pricedata, est_return(energy_pricedata), est_volatiliy(energy_pricedata))

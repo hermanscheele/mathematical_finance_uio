@@ -1,1 +1,1 @@
-# Repo for all code written for STK-MAT3700
+# All the code written for STK-MAT3700

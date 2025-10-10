@@ -22,7 +22,6 @@ class Assignment:
 
 
     def p1b(self):
-        corrs = []
         r_lst = []
 
         for i in range(n):
@@ -39,10 +38,36 @@ class Assignment:
 
 
     def p1c(self):
-        return 0
+        r_lst = get_returns_vec(assets, df)
+        cov_matrix = cov_mat(r_lst)
+        mu = np.array(est_return_vec(assets, df))
+
+        plot_efficient_frontier(mu, cov_matrix, r_lst)
+        w_m, mu_m, sigma_m = min_var_portfolio(mu, cov_matrix)
+        print(f'Min. Var. Portfolio: w = {w_m}, return = {mu_m}, risk = {sigma_m}')
+
+        plt.legend()
+        plt.show()
+
+
+    def p1d(self):
+    
+        for i in range(2):
+            r_lst = get_returns_vec(assets, df)[i:]
+            mu = np.array(est_return_vec(assets, df)[i:])
+
+            cov_matrix = cov_mat(r_lst)
+
+            plot_efficient_frontier(mu, cov_matrix, r_lst)
+    
+        plt.legend()
+        plt.show()
+
 
 
 a = Assignment()
 
 # a.p1a()
 # a.p1b()
+# a.p1c()
+a.p1d()

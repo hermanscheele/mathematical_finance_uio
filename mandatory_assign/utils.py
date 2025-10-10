@@ -17,9 +17,25 @@ def get_returns(price_data):
     return r
 
 
+def get_returns_vec(assets, df):
+    l = []
+    for a in assets:
+        p = df[a]
+        l.append(get_returns(p))
+    return l
+
+
 def est_return(r):
     return sum(r) / len(r)
 
+
+def est_return_vec(assets, df):
+    vec = []
+    for a in assets:
+        p = df[a]
+        r = get_returns(p)
+        vec.append(est_return(r))
+    return vec
 
 def est_volatiliy(r):
     n = len(r)
@@ -86,5 +102,54 @@ def cov_mat(r):
         matrix.append(row)
 
     return np.array(matrix)
+
+
+def markowitz_scalars(mu, cov):
+    n = len(cov)
+    C_inv = np.linalg.inv(cov)
+    e = np.ones(n)
+
+    A = e.T @ C_inv @ e
+    B = e.T @ C_inv @ mu
+    C = mu.T @ C_inv @ mu
+    D = A * C - (B**2)
+
+    return A, B, C, D
+
+
+def plot_efficient_frontier(mu, cov, r_lst):
+
+    A, B, C, D = markowitz_scalars(mu, cov)
+
+    def min_var(x):
+        return ((A * x**2) - (2*B * x) + C) / D
+
+    y = np.linspace(-min(mu), max(mu), 50)
+    x = np.sqrt(min_var(y))
+
+    # ----------- lable axis ---------# 
+
+    plt.plot(x, y, label=f'Efficient Frontier n = {len(r_lst)}')
+    
+    for r in r_lst:
+        plt.plot(est_volatiliy(r), est_return(r), 'o')
+
+
+
+def min_var_portfolio(mu, cov):
+
+    A, B, _, _ = markowitz_scalars(mu, cov)
+    n = len(cov)
+    C_inv = np.linalg.inv(cov)
+    e = np.ones(n)
+
+    # Min. Var. Portfolio
+    w_m = (1/A) * C_inv @ e
+    mu_m = B / A
+    sigma_m = 1 / np.sqrt(A)
+    
+    return w_m, mu_m, sigma_m
+
+
 
 

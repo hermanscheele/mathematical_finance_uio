@@ -63,6 +63,13 @@ class Assignment:
         plt.legend()
         plt.show()
 
+    
+    def p2a(self):
+        return 0    
+
+
+
+
 
 
 a = Assignment()

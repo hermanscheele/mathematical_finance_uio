@@ -3,6 +3,8 @@ import math as m
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from scipy.optimize import brentq
+
 
 
 def get_returns(price_data):
@@ -162,3 +164,8 @@ def black_scholes_call(s_0, k, r, t, sigma):
 
     return (s_0 * N(d_1)) - (k * m.exp(-r * t) * N(d_2))
 
+
+
+def implied_vol_call(C_mkt, s0, k, r, t, lo=1e-9, hi=5.0):
+    f = lambda sig: black_scholes_call(s0, k, r, t, sig) - C_mkt
+    return brentq(f, lo, hi)  

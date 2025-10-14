@@ -6,6 +6,12 @@ df = pd.read_csv("finance_data.csv", sep=";")
 assets = df.columns.tolist()[1:]
 n = len(assets)
 
+df2 = pd.read_csv("nvidia_calls.csv", sep=";")
+strikes = df2["Nvidia (Calls) Strike"]
+c_prices = df2["Price"]
+stock_price = 188.32
+
+
 
 class Assignment:
 
@@ -89,7 +95,18 @@ class Assignment:
 
     def p2b(self):
 
-        return 0
+        r = 0.03
+        t = 0.008219 # 3 days anualised
+
+        i_p = []
+        for i in range(len(strikes)):
+            i_p.append(implied_vol_call(c_prices[i], stock_price, strikes[i], r, t))
+        
+        plt.plot(strikes, i_p)
+        plt.xlabel("Strike")
+        plt.ylabel("Implied Vol.")
+        plt.show()
+            
 
 
 
@@ -101,3 +118,4 @@ a = Assignment()
 # a.p1c()
 # a.p1d()
 # a.p2a()
+a.p2b()

@@ -65,9 +65,31 @@ class Assignment:
 
     
     def p2a(self):
-        return 0    
+
+        s_0 = 100.0
+        sigmas_ts = [(0.1, 1/12), (0.3, 1/4), (0.5, 1/2)]
+        ks = [0.6*s_0, 0.8*s_0, s_0, 1.2*s_0, 1.4*s_0]
+        r = 0.03
+
+        c_p = []
+        for sigma, _ in sigmas_ts:
+            for _, t in sigmas_ts:
+                for k in ks:
+                    c_p.append(black_scholes_call(s_0, k, r, t, sigma))
+
+                plt.plot(ks, c_p, label=f'T = {t:.3f}')
+                c_p.clear()
+
+            plt.title(f'Stock Price (S_0 = {s_0}), r = {r*100}%, σ = {sigma*100}%')
+            plt.xlabel('Strike Price (K)')
+            plt.ylabel('Call Price (C)')
+            plt.legend()
+            plt.show()
 
 
+    def p2b(self):
+
+        return 0
 
 
 
@@ -77,4 +99,5 @@ a = Assignment()
 # a.p1a()
 # a.p1b()
 # a.p1c()
-a.p1d()
+# a.p1d()
+# a.p2a()

@@ -61,7 +61,6 @@ class Assignment:
         for i in range(2):
             r_lst = get_returns_vec(assets, df)[i:]
             mu = np.array(est_return_vec(assets, df)[i:])
-
             cov_matrix = cov_mat(r_lst)
 
             plot_efficient_frontier(mu, cov_matrix, r_lst)
@@ -114,9 +113,9 @@ class Assignment:
 
 a = Assignment()
 
-#a.p1a()
-a.p1b()
+# a.p1a()
+# a.p1b()
 # a.p1c()
-# a.p1d()
+a.p1d()
 # a.p2a()
 # a.p2b()

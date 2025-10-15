@@ -39,6 +39,7 @@ def est_return_vec(assets, df):
         vec.append(est_return(r))
     return vec
 
+
 def est_volatiliy(r):
     n = len(r)
     s = 0.0
@@ -46,18 +47,6 @@ def est_volatiliy(r):
         s += (r[i] - est_return(r)) ** 2
     
     return np.sqrt((1 / (n - 1)) * s)
-
-
-
-# #--------------- need this for the fitted normal distribution -------------------- #
-# def all_est_return_vol(data, df):
-#     est_return_vol_list = []
-#     for i in range(1, len(data)):
-#         prices = df[data[i]]
-#         t = (est_return(prices), est_volatiliy(prices))
-#         est_return_vol_list.append(t)
-
-#     return est_return_vol_list
 
 
 def fit_norm_dist(x, mu, sigma):
@@ -106,6 +95,7 @@ def cov_mat(r):
     return np.array(matrix)
 
 
+# Markowitz scalars
 def markowitz_scalars(mu, cov):
     n = len(cov)
     C_inv = np.linalg.inv(cov)
@@ -119,6 +109,7 @@ def markowitz_scalars(mu, cov):
     return A, B, C, D
 
 
+# Calculate the min. var. and plot the efficient frontier
 def plot_efficient_frontier(mu, cov, r_lst):
 
     A, B, C, D = markowitz_scalars(mu, cov)
@@ -129,15 +120,15 @@ def plot_efficient_frontier(mu, cov, r_lst):
     y = np.linspace(-min(mu), max(mu), 50)
     x = np.sqrt(min_var(y))
 
-    # ----------- lable axis ---------# 
-
     plt.plot(x, y, label=f'Efficient Frontier n = {len(r_lst)}')
+    plt.xlabel("Volatility")
+    plt.ylabel("Return")
     
     for r in r_lst:
         plt.plot(est_volatiliy(r), est_return(r), 'o')
 
 
-
+# w, mu & sigma for the min. var. portfolio
 def min_var_portfolio(mu, cov):
 
     A, B, _, _ = markowitz_scalars(mu, cov)

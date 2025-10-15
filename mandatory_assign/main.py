@@ -24,7 +24,7 @@ class Assignment:
             sigma_hat = est_volatiliy(r)
 
             print(f'Asset: {a}, r_hat: {r_hat}, sigma_hat: {sigma_hat}')    
-            plot_return_dist(r, r_hat, sigma_hat)
+            plot_return_dist(r, r_hat, sigma_hat, a)
 
 
     def p1b(self):
@@ -103,6 +103,7 @@ class Assignment:
             i_p.append(implied_vol_call(c_prices[i], stock_price, strikes[i], r, t))
         
         plt.plot(strikes, i_p)
+        plt.title("Implied Volatility vs. Strike")
         plt.xlabel("Strike")
         plt.ylabel("Implied Vol.")
         plt.show()
@@ -113,9 +114,9 @@ class Assignment:
 
 a = Assignment()
 
-# a.p1a()
-# a.p1b()
+#a.p1a()
+a.p1b()
 # a.p1c()
 # a.p1d()
 # a.p2a()
-a.p2b()
+# a.p2b()

@@ -64,7 +64,7 @@ def fit_norm_dist(x, mu, sigma):
     return (1 / np.sqrt(2*np.pi*sigma**2)) * np.exp(-(1/2) * ((x - mu)**2 / sigma**2))
 
 
-def plot_return_dist(r, mu, sigma):
+def plot_return_dist(r, mu, sigma, a):
 
     x = np.linspace(mu - 4*sigma, mu + 4*sigma, 500)
     y = fit_norm_dist(x, mu, sigma)
@@ -72,6 +72,7 @@ def plot_return_dist(r, mu, sigma):
     plt.plot(x, y, color='r', label='fitted normal dist.')
     sns.histplot(r, color="skyblue", label='empirical dist.')
 
+    plt.title(f"Asset: {a}")
     plt.legend()
     plt.show()
 
@@ -86,7 +87,6 @@ def cov(r_i, r_j):
         s += ( (r_i[k] - est_return(r_i)) * (r_j[k] - est_return(r_j)) )
 
     return (1 / (n - 1)) * s
-
 
 # Correlation 
 def corr(r_i, r_j):

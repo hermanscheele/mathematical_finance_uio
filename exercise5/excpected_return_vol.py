@@ -20,7 +20,7 @@ def est_return(price_data):
         r_i = (s_i_1 - s_i) / s_i
         r_sum += r_i
 
-    r_k = r_sum / n
+    r_k = r_sum / (n - 1)
     return r_k
 
 
@@ -77,3 +77,4 @@ def plot_return_data(price_data, r_k, sigma):
 
 energy_pricedata = df[cols[1]]
 plot_return_data(energy_pricedata, est_return(energy_pricedata), est_volatiliy(energy_pricedata))
+
